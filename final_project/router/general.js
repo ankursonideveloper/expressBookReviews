@@ -7,25 +7,36 @@ const public_users = express.Router();
 
 public_users.post("/register", (req,res) => {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  let books = JSON.stringify(books,null,2);
+  return res.status(200).json(books);
 });
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  
+  return res.status(300).json(books);
 });
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    const isbn = req.params.isbn;
+  let isbnBook = books[isbn];
+  return res.status(200).json(isbnBook);
  });
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    const author = req.params.author;
+    let result;
+    for (const key in books) {
+        if (books[key]['author'] === author){
+            result = books[key];
+            return res.status(200).json(result);
+        }
+
+    }
+    return res.status(200).json({message: `Book not found with author: ${author}`});
+
 });
 
 // Get all books based on title
